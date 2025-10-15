@@ -4,9 +4,13 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "dev-secret-change-me"
-DEBUG = True
-ALLOWED_HOSTS = ["*"]   # На проде укажи ["qazfooty.asia"]
+# На проде лучше брать из переменных окружения
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-secret-change-me")
+
+# Прод-режим
+DEBUG = False
+ALLOWED_HOSTS = ["qazfooty.asia", "www.qazfooty.asia", "127.0.0.1", "localhost"]
+CSRF_TRUSTED_ORIGINS = ["https://qazfooty.asia", "https://www.qazfooty.asia"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -74,13 +78,14 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Пути логинов
 LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/users/profile/"
 LOGOUT_REDIRECT_URL = "/users/login/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Django REST Framework
+# DRF
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -92,15 +97,19 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 12,
 }
 
-# JWT токены
+# JWT
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
-DEBUG = False
-ALLOWED_HOSTS = ["qazfooty.asia", "www.qazfooty.asia", "127.0.0.1", "localhost"]
-CSRF_TRUSTED_ORIGINS = ["https://qazfooty.asia", "https://www.qazfooty.asia"]
+
+# Набор базовых security-флагов (безопасно с HTTPS, не ломает проект)
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 
 
 
