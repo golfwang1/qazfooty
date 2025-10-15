@@ -99,8 +99,8 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 DEBUG = False
-ALLOWED_HOSTS = ["qafooty.asia", "www.qafooty.asia", "127.0.0.1", "localhost"]
-CSRF_TRUSTED_ORIGINS = ["https://qafooty.asia", "https://www.qafooty.asia"]
+ALLOWED_HOSTS = ["qazfooty.asia", "www.qazfooty.asia", "127.0.0.1", "localhost"]
+CSRF_TRUSTED_ORIGINS = ["https://qazfooty.asia", "https://www.qazfooty.asia"]
 
 
 
