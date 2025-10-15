@@ -6,9 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>QazFooty — {% block title %}Главная{% endblock %}</title>
 
-  <!-- Вендоры -->
+  <!-- Bootstrap и FontAwesome -->
   <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
-  <!-- Если у тебя нет fontawesome — строку ниже можно удалить -->
   <link rel="stylesheet" href="{% static 'vendor/fontawesome/css/fontawesome-all.min.css' %}">
 
   <!-- Тема проекта -->
@@ -28,24 +27,21 @@
     <div id="nav" class="collapse navbar-collapse">
       <ul class="navbar-nav ml-auto align-items-center">
         <li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
-
-        {# Ссылки без {% url %} чтобы не ловить NoReverseMatch #}
         {% if user.is_authenticated %}
-          <li class="nav-item"><a class="nav-link" href="/profile/">Профиль</a></li>
-          <li class="nav-item"><a class="nav-link" href="/groups/">Группы</a></li>
+          <li class="nav-item"><a class="nav-link" href="/users/profile/">Профиль</a></li>
+          <li class="nav-item"><a class="nav-link" href="/users/groups/">Группы</a></li>
           <li class="nav-item">
-            <form method="post" action="/logout/" class="m-0 p-0 d-inline">
+            <form method="post" action="/users/logout/" class="m-0 p-0 d-inline">
               {% csrf_token %}
               <button type="submit" class="btn btn-link nav-link px-2 py-2">Выйти</button>
             </form>
           </li>
         {% else %}
-          <li class="nav-item"><a class="nav-link" href="/login/">Войти</a></li>
-          <li class="nav-item"><a class="nav-link" href="/register/">Регистрация</a></li>
+          <li class="nav-item"><a class="nav-link" href="/users/login/">Войти</a></li>
+          <li class="nav-item"><a class="nav-link" href="/users/register/">Регистрация</a></li>
         {% endif %}
-
         <li class="nav-item">
-          <form class="form-inline ml-lg-3" action="/search/" method="get" role="search">
+          <form class="form-inline ml-lg-3" action="/search/" method="get">
             <input class="form-control form-control-sm mr-2" style="width:220px"
                    type="search" name="q" placeholder="Поиск…" value="{{ request.GET.q|default_if_none:'' }}">
             <button class="btn btn-outline-warning btn-sm" type="submit">Найти</button>
@@ -66,12 +62,12 @@
   </div>
 </footer>
 
-<!-- Скрипты (пути к статике проверь в /static/vendor/...) -->
 <script src="{% static 'vendor/jquery/jquery-3.2.1.slim.min.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 {% block extra_js %}{% endblock %}
 </body>
 </html>
+
 
 
 
