@@ -1,32 +1,19 @@
 # Python
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
+*.sqlite3
+*.db
 
-# Django stuff
-*.log
-*.pot
-*.pyc
-db.sqlite3
-media/
-
-# Environments
+# Virtual environment
 venv/
-.env
-*.env
+env/
 
-# IDE / Editors
+# Django static/media
+/staticfiles/
+/media/
+
+# IDE
 .vscode/
 .idea/
-*.swp
-*.swo
+*.log
 
-# System files
-.DS_Store
-Thumbs.db
