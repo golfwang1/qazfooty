@@ -98,7 +98,9 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
-
+DEBUG = False
+ALLOWED_HOSTS = ["qafooty.asia", "www.qafooty.asia", "127.0.0.1", "localhost"]
+CSRF_TRUSTED_ORIGINS = ["https://qafooty.asia", "https://www.qafooty.asia"]
 
 
 
