@@ -1,12 +1,12 @@
 from pathlib import Path
-import os
 from datetime import timedelta
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "dev-secret-change-me"  # на проде вынести в переменные окружения
+SECRET_KEY = "dev-secret-change-me"
 DEBUG = True
-ALLOWED_HOSTS = ["*"]                # на проде сузить
+ALLOWED_HOSTS = ["*"]   # На проде укажи ["qazfooty.asia"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -16,17 +16,15 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # ваши приложения
+    # твои приложения
     "clubs",
     "users",
+    "api",
 
-    # REST + JWT + Swagger
+    # REST + JWT
     "rest_framework",
     "rest_framework_simplejwt",
-    "drf_yasg",        # Swagger UI на drf-yasg
-    "api",
 ]
-
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -76,44 +74,31 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# Используем ПУТИ, а не имена, чтобы исключить NoReverseMatch
 LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/users/profile/"
 LOGOUT_REDIRECT_URL = "/users/login/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# settings.py
-from datetime import timedelta
-
+# Django REST Framework
 REST_FRAMEWORK = {
-    # Только JWT. НЕТ SessionAuthentication — без логина в браузере
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
-    # Любой эндпоинт API требует авторизацию
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 12,
-    # Оставим browsable renderer — он удобен для просмотра, но без токена вернёт 401
-    # Если хочешь полностью убрать HTML браузер, добавь:
-    # "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
 }
 
+# JWT токены
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
-SPECTACULAR_SETTINGS = {
-    "TITLE": "QazFooty API",
-    "DESCRIPTION": "JWT: /api/auth/token/ (POST username/password) → Bearer <access>",
-    "VERSION": "1.0.0",
-}
 
 
 
