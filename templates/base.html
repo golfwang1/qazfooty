@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QazFooty — {% block title %}Главная{% endblock %}</title>
+  <!-- Библиотеки -->
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/fontawesome/css/fontawesome-all.min.css' %}">
+  <!-- Тема проекта -->
+  <link rel="stylesheet" href="{% static 'css/qazfooty-theme.css' %}">
+
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="layout-col">
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a class="navbar-brand brand-accent" href="/">QazFooty</a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav"
+              aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' %}">Профиль</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'users:groups_list' %}">Группы</a></li>
+            <!-- Выйти: как пункт меню, в одной линии -->
+            <li class="nav-item">
+              <form method="post" action="{% url 'users:logout' %}" class="m-0 p-0 d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link nav-link px-2 py-2 logout-link">Выйти</button>
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Войти</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'users:register' %}">Регистрация</a></li>
+          {% endif %}
+
+          <!-- Поиск -->
+          <li class="nav-item">
+            <form class="form-inline ml-lg-3" action="{% url 'search' %}" method="get" role="search">
+              <input class="form-control form-control-sm mr-2" style="width:220px"
+                     type="search" name="q" placeholder="Поиск…" value="{{ request.GET.q|default_if_none:'' }}">
+              <button class="btn btn-outline-warning btn-sm" type="submit">Найти</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- CONTENT -->
+  <main class="container py-4 flex-grow-1">
+    {% block content %}{% endblock %}
+  </main>
+<!-- FOOTER (edge-to-edge) -->
+<footer class="site-footer mt-auto" role="contentinfo">
+  <div class="site-footer__inner">
+    <small class="site-footer__text">
+      <span class="text-accent">© QazFooty — будущее Казахстанского футбола</span>,
+      обратная связь: <a class="text-accent site-footer__link" href="mailto:sultanaimebtov8@example.com">
+        sultanaimebtov8@example.com
+      </a>
+    </small>
+  </div>
+</footer>
+  <script src="{% static 'vendor/jquery/jquery-3.2.1.slim.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
+
+
+
+
+
+
